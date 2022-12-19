@@ -1,0 +1,270 @@
+#include "s21_matrix.h"
+
+// create_matrix
+
+
+#test test_create_matrix_01
+
+int rows = 3;
+int columns = 3;
+matrix_t matrix_1;
+int ok = s21_create_matrix(rows, columns, &matrix_1);
+ck_assert_int_eq(ok, 0);
+ck_assert_int_eq(matrix_1->rows, rows);
+ck_assert_int_eq(matrix_1->columns, columns);
+s21_remove_matrix(matrix_1);
+
+
+#test test_create_matrix_02
+
+int rows = 0;
+int columns = 0;
+matrix_t matrix_1;
+int ok = s21_create_matrix(rows, columns, &matrix_1);
+ck_assert_int_eq(ok, INCORRECT_MATRIX);
+s21_remove_matrix(matrix_1);
+
+
+#test test_create_matrix_03
+
+int rows = 0;
+int columns = 1;
+matrix_t matrix_1;
+int ok = s21_create_matrix(rows, columns, &matrix_1);
+ck_assert_int_eq(ok, INCORRECT_MATRIX);
+s21_remove_matrix(matrix_1);
+
+
+#test test_create_matrix_04
+
+int rows = -1;
+int columns = 3;
+matrix_t matrix_1;
+int ok = s21_create_matrix(rows, columns, &matrix_1);
+ck_assert_int_eq(ok, INCORRECT_MATRIX);
+s21_remove_matrix(matrix_1);
+
+// remove_matrix
+
+// #test test_remove_matrix_01
+
+// eq_matrix
+
+#test test_eq_matrix_01
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{1,2},{1,2}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, SUCCESS);
+
+
+#test test_eq_matrix_02
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{1,2,3},{1,2,3}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 3, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, FAILURE);
+
+
+#test test_eq_matrix_03
+
+double** numbers1 = {{1.00000001,2},{1,2}};
+double** numbers2 = {{1,2},{1,2}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, SUCCESS);
+
+
+#test test_eq_matrix_04
+
+double** numbers1 = {{1.0000001,2},{1,2}};
+double** numbers2 = {{1,2},{1,2}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, FAILURE);
+
+
+#test test_eq_matrix_05
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{1,2},{1,2.00001}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, FAILURE);
+
+
+#test test_eq_matrix_06
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{1,2},{1,2.0000001}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, FAILURE);
+
+
+#test test_eq_matrix_07
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{1,2},{1,2.00000001}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, SUCCESS);
+
+#test test_eq_matrix_07
+
+int ok = s21_eq_matrix(NULL, NULL);
+ck_assert_int_eq(ok, FAILURE);
+
+
+// sum_matrix
+
+#test test_sum_matrix_01
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{1,2,3},{1,2,3}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 3, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_sum_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, CALCULATION_ERROR);
+
+#test test_sum_matrix_02
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{1,2},{1,2}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 3, matrix_2);
+matrix_2->matrix = numbers2;
+int ok = s21_sum_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(ok, INCORRECT_MATRIX);
+
+#test test_sum_matrix_03
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{2,1},{2,2}};
+double** numbers2 = {{3,3},{3,4}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+matrix_t expect;
+matrix_t result;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+s21_create_matrix(2, 2, expect);
+matrix_2->matrix = expect;
+int ok = s21_sum_matrix(&matrix_1, &matrix_2, &result);
+ck_assert_int_eq(ok, OK);
+int res = s21_eq_matrix(&expect, &result);
+ck_assert_int_eq(res, SUCCESS);
+
+#test test_sum_matrix_03
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{2,1},{2,2}};
+double** numbers2 = {{3,3},{3,4}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+matrix_t expect;
+matrix_t result;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+s21_create_matrix(2, 2, expect);
+matrix_2->matrix = expect;
+int ok = s21_sum_matrix(&matrix_1, &matrix_2, &result);
+ck_assert_int_eq(ok, OK);
+int res = s21_eq_matrix(&expect, &result);
+ck_assert_int_eq(res, SUCCESS);
+
+#test test_sum_matrix_03
+
+double** numbers1 = {{1,2},{1,2}};
+double** numbers2 = {{2,1},{2,2}};
+double** numbers2 = {{3,3},{3,4}};
+matrix_t matrix_1;
+matrix_t matrix_2;
+matrix_t expect;
+matrix_t result;
+s21_create_matrix(2, 2, matrix_1)
+matrix_1->matrix = numbers1;
+s21_create_matrix(2, 2, matrix_2);
+matrix_2->matrix = numbers2;
+s21_create_matrix(2, 2, expect);
+matrix_2->matrix = expect;
+int ok = s21_sum_matrix(&matrix_1, &matrix_2, &result);
+ck_assert_int_eq(ok, OK);
+int res = s21_eq_matrix(&expect, &result);
+ck_assert_int_eq(res, SUCCESS);
+
+// sub_matrix
+
+#test test_sub_matrix_01
+
+// mult_number
+
+#test test_mult_number_01
+
+// mult_matrix
+
+#test test_mult_matrix_01
+
+// transpose
+
+#test test_transpose_01
+
+// calc_complements
+
+#test test_calc_complements_01
+
+// determinant
+
+#test test_determinant_01
+
+// inverse_matrix
+
+#test test_inverse_matrix_01
