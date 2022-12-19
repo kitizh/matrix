@@ -1,6 +1,6 @@
 # Определение операционной системы, имена программ и параметров
 UNAME = $(shell uname -s)
-CC=gcc #-fsanitize=address
+CC=gcc
 CFLAGS=-Wall -Wextra -Werror -std=c11
 GCOVFLAGS:=--coverage
 # macOS

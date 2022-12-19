@@ -35,8 +35,6 @@ int s21_minor(matrix_t *A, double *result);
 int s21_copy_matrix(matrix_t *A, matrix_t *B);
 int s21_simple_det(matrix_t *A, double *result);
 int s21_fill_not_crossed(matrix_t *A, matrix_t *result, int i, int j);
-int s21_crop_matrix(matrix_t *A, int row, int column, matrix_t *result);
-void s21_free_matrix(matrix_t *A);
 int s21_is_correct_matrix(matrix_t *A);
 
 #endif  // SRC_S21_MATRIX_H_

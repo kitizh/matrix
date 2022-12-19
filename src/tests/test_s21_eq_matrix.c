@@ -45,8 +45,8 @@ START_TEST(test_s21_eq_matrix_1_4) {
   matrix_t B;
   s21_create_matrix(1, 1, &A);
   s21_create_matrix(1, 1, &B);
-  s21_free_matrix(&A); // Устанавливает матрицу в NULL
-  s21_free_matrix(&B); // Устанавливает матрицу в NULL
+  s21_remove_matrix(&A); // Устанавливает матрицу в NULL
+  s21_remove_matrix(&B); // Устанавливает матрицу в NULL
   int status = s21_eq_matrix(&A, &B);
   ck_assert_int_eq(status, FAILURE);
   s21_remove_matrix(&A);

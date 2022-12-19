@@ -15,7 +15,7 @@ START_TEST(test_s21_remove_matrix_1_2) {
   matrix_t A;
   matrix_t *ptrA = &A;
   s21_create_matrix(3, 4, ptrA);
-  s21_free_matrix(ptrA); // Устанавливает матрицу в NULL
+  s21_remove_matrix(ptrA); // Устанавливает матрицу в NULL
   s21_remove_matrix(ptrA);
   ck_assert_int_eq(ptrA->rows, 0);
   ck_assert_int_eq(ptrA->columns, 0);
